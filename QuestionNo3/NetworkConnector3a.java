@@ -1,24 +1,19 @@
-// Question 3a
-// You have a network of n devices. Each device can have its own communication module installed at a
-// cost of modules [i - 1]. Alternatively, devices can communicate with each other using direct connections.
-// The cost of connecting two devices is given by the array connections where each connections[j] =
-// [device1j, device2j, costj] represents the cost to connect devices device1j and device2j. Connections are
-// bidirectional, and there could be multiple valid connections between the same two devices with different
-// costs.
-// Goal:
-// Determine the minimum total cost to connect all devices in the network.
-// Input:
-// n: The number of devices.
-// modules: An array of costs to install communication modules on each device.
-// connections: An array of connections, where each connection is represented as a triplet [device1j,
-// device2j, costj].
-// Output:
-// The minimum total cost to connect all devices.
-// Example:
-// Input: n = 3, modules = [1, 2, 2], connections = [[1, 2, 1], [2, 3, 1]] Output: 3
-// Explanation:
-// The best strategy is to install a communication module on the first device with cost 1 and connect the
-// other devices to it with cost 2, resulting in a total cost of 3.
+//QuestionNo3.a)
+
+// Problem Description: You are given a network of n devices, each with an installation cost for a communication module. 
+// Alternatively, devices can communicate via direct connections, with each connection having a specified cost. 
+// The objective is to determine the minimum total cost to connect all devices, either by installing communication modules or by 
+// establishing direct connections between devices.
+
+// Objective: The goal is to find the minimum total cost to connect all the devices in the network, considering both the costs of 
+// installing communication modules on each device and the costs of direct connections between devices.
+
+// Approach: The problem is modeled as a Minimum Spanning Tree (MST) problem. We add a virtual node representing the option of installing
+//  communication modules and connect it to each device with the corresponding module cost. Additionally, we add the direct connections
+//  between devices. Using Kruskal’s algorithm, we sort all the edges (module installations and device-to-device connections) by cost and apply 
+//  the Union-Find structure to compute the MST and minimize the total connection cost.
+
+
 import java.util.*;
 
 public class NetworkConnector3a {
@@ -85,3 +80,5 @@ public class NetworkConnector3a {
         System.out.println(minTotalCost(n, modules, connections)); // Output: 3
     }
 }
+
+/*Output :The minimum cost to connect all devices is: 3 */

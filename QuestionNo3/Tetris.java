@@ -1,4 +1,20 @@
-package Tetris;
+//QuestionNo3.b)
+
+// Problem Description: The task is to implement a Tetris game with key functionalities such as managing falling blocks using a queue, 
+// representing the game board using a stack, and handling user input for block movement and rotation. The game involves generating random blocks, 
+// checking for collisions, clearing completed rows, and managing the game state with a GUI that displays the game board, next block preview, and 
+// buttons for user interaction.
+
+// Objective: The goal is to create a fully functional Tetris game where blocks fall, players can move and rotate them, rows are cleared when filled, 
+// and the game ends when the top row is completely filled. The game should also include features like scoring, leveling, and power-ups.
+
+// Approach: The game uses a queue to manage the sequence of falling blocks and a stack to represent the game board's current state. 
+// The game loop checks for collisions and game-over conditions, updates the game state, and handles user input for moving and rotating blocks.
+//  When a row is completed, it is cleared, and a new block is generated. A scoring system and leveling are implemented to increase the difficulty 
+//  as the game progresses. The user interface displays the game board, current block, and next block preview, with buttons for left, right, and 
+//  rotate movements.
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -36,15 +52,15 @@ public class Tetris extends JPanel implements ActionListener {
     private Random random = new Random();
     private int score = 0;
     private int level = 1;
-
+    
     private final int[][][] TETROMINOES = {
-            {{1, 1, 1, 1}},  // I
-            {{1, 1}, {1, 1}}, // O
-            {{0, 1, 0}, {1, 1, 1}}, // T
-            {{1, 1, 0}, {0, 1, 1}}, // Z
-            {{0, 1, 1}, {1, 1, 0}}, // S
-            {{1, 0, 0}, {1, 1, 1}}, // L
-            {{0, 0, 1}, {1, 1, 1}}  // J
+            {{1, 1, 1, 1}},
+            {{1, 1}, {1, 1}},
+            {{0, 1, 0}, {1, 1, 1}},
+            {{1, 1, 0}, {0, 1, 1}},
+            {{0, 1, 1}, {1, 1, 0}},
+            {{1, 0, 0}, {1, 1, 1}},
+            {{0, 0, 1}, {1, 1, 1}}
     };
 
     public Tetris() {
@@ -83,12 +99,7 @@ public class Tetris extends JPanel implements ActionListener {
                 if (shape[i][j] == 1) {
                     int newX = x + j;
                     int newY = y + i;
-                    // Check if the block is within bounds
-                    if (newX < 0 || newX >= BOARD_WIDTH || newY >= BOARD_HEIGHT) {
-                        return false;
-                    }
-                    // Check if the block collides with existing blocks
-                    if (newY >= 0 && board[newY][newX] == 1) {
+                    if (newX < 0 || newX >= BOARD_WIDTH || newY < 0 || newY >= BOARD_HEIGHT || (newY >= 0 && board[newY][newX] == 1)) {
                         return false;
                     }
                 }
@@ -146,15 +157,11 @@ public class Tetris extends JPanel implements ActionListener {
                 }
                 break;
             case KeyEvent.VK_DOWN:
-                if (isValidMove(currentTetromino.shape, currentX, currentY + 1)) {
-                    currentY++;
-                }
+                if (isValidMove(currentTetromino.shape, currentX, currentY + 1)) currentY++;
                 break;
             case KeyEvent.VK_UP:
                 int[][] rotated = currentTetromino.rotate();
-                if (isValidMove(rotated, currentX, currentY)) {
-                    currentTetromino.shape = rotated;
-                }
+                if (isValidMove(rotated, currentX, currentY)) currentTetromino.shape = rotated;
                 break;
         }
         repaint();
@@ -176,7 +183,7 @@ public class Tetris extends JPanel implements ActionListener {
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, BOARD_WIDTH * TILE_SIZE + 10, 20);
         g.drawString("Level: " + level, BOARD_WIDTH * TILE_SIZE + 10, 40);
-
+        
         for (int i = 0; i < BOARD_HEIGHT; i++) {
             for (int j = 0; j < BOARD_WIDTH; j++) {
                 if (board[i][j] == 1) {
@@ -204,4 +211,3 @@ public class Tetris extends JPanel implements ActionListener {
         frame.setVisible(true);
     }
 }
-
